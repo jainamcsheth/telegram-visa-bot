@@ -3,11 +3,11 @@
 Telegram bot for Visa group which kicks user if the message is not as per the group rules.
 
 The rules are simple.
-Whenever you check visa dates, please update the group in the following pattern:\
-If No dates - 'HH:MM am/pm NA DD month_name'\
-If date available - 'HH:MM am/pm available DD month_name'\
+Whenever you check visa dates, please update the group in the following pattern:
+If No dates - 'HH:MM am/pm NA DD month_name'
+If date available - 'HH:MM am/pm available DD month_name'
 
-Examples:\
+Examples:
 - 01:15 am NA
 - 12:30 pm available 12 Jun
 - 10:00 am available 15 June
@@ -16,7 +16,7 @@ Examples:\
 
 ## Initial Step
 
-Go to root folder and run `npm install` to install all the dependencies.\
+Go to root folder and run `npm install` to install all the dependencies.
 
 ## Development server
 
