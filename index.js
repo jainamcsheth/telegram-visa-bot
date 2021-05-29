@@ -1,5 +1,4 @@
 require('dotenv').config();
-const { Telegraf } = require('telegraf');
 const { connectToDb } = require('./db.js');
 const {
   validateMessage,
@@ -7,8 +6,9 @@ const {
   getRules,
   updateUsersDb
 } = require('./util');
+const { Composer } = require('micro-bot')
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Composer;
 
 bot.help((ctx) => ctx.replyWithHTML(getRules()));
 
@@ -39,8 +39,6 @@ bot.use((ctx) => {
   }
 });
 
-bot.launch();
-
 //Initalize DB
 (async function () {
   try {
@@ -49,3 +47,5 @@ bot.launch();
     console.log('Error connecting to DB - ', error);
   }
 })();
+
+module.exports = bot;
