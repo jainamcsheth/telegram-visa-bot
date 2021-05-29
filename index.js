@@ -6,9 +6,9 @@ const {
   getRules,
   updateUsersDb
 } = require('./util');
-const { Composer } = require('micro-bot')
+const { Composer } = require('micro-bot');
 
-const bot = new Composer;
+const bot = new Composer();
 
 bot.help((ctx) => ctx.replyWithHTML(getRules()));
 
