@@ -1,8 +1,8 @@
 require('dotenv').config();
-const { Telegraf } = require('telegraf');
+const { Composer } = require('micro-bot')
 const { validateMessage, isCurrentCtxValid, getRules } = require('./util');
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Composer;
 
 bot.help((ctx) => ctx.replyWithHTML(getRules()));
 
@@ -37,4 +37,4 @@ bot.use((ctx) => {
   ctx.reply(`Message in correct format - ${message}`);
 });
 
-bot.launch();
+module.exports = bot;
