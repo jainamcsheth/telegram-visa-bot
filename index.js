@@ -24,7 +24,7 @@ bot.use((ctx) => {
   if (!isValidMessage) {
     const userId = ctx.message.from.id;
     // Dont try to kick if its me
-    if (userId === process.env.MY_TELEGRAM_USER_ID) {
+    if (userId === +process.env.MY_TELEGRAM_USER_ID) {
       return;
     }
     ctx.reply('Message not in correct format. Please follow the rules. Read the pinned message');
