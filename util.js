@@ -1,5 +1,5 @@
 /**
- * IReturns true if current context is a text message or else false.
+ * Returns true if current context is a text message or else false.
  * If a bot is added in the current context, then kick the bot and return false.
  */
  const isCurrentCtxValid = (ctx) => {

@@ -9,16 +9,12 @@ bot.help((ctx) => ctx.replyWithHTML(getRules()));
 bot.command('rules', (ctx) => ctx.replyWithHTML(getRules()));
 
 bot.use((ctx) => {
-  console.log('Message is - ', ctx.message);
-
-  // If its a valid chat message on the group then proceed or else skip.
+  // If its a valid chat message on the group then proceed or else exit from this middleware.
   if (!isCurrentCtxValid(ctx)) {
     return;
   }
 
-  const message = ctx.message.text;
-
-  console.log('#########Pattern is correct or not - ', validateMessage(message));
+  const { text: message } = ctx.message;
 
   const isValidMessage = validateMessage(message);
   if (!isValidMessage) {
@@ -32,9 +28,6 @@ bot.use((ctx) => {
     ctx.unbanChatMember(userId);
     return;
   }
-
-  console.log('*******************************************************************************************');
-  ctx.reply(`Message in correct format - ${message}`);
 });
 
 bot.launch();
