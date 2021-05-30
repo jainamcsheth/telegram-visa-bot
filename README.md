@@ -4,23 +4,21 @@ Telegram bot for Visa group which kicks user if the message is not as per the gr
 
 The rules are simple.\
 Whenever you check visa dates, please update the group in the following pattern:\
-'HH:MM am/pm NA/Available DD? month_name? Total_Slots? Error?'\
+If No Visa date - 'HH:MM am/pm NA'\
+Is Visa date available - 'HH:MM am/pm available DD? month_name? Total_Slots? Error/Success?'\
 In the above format '?' stands for optional.\
 'Error' in format is to tell that dates were available but error while booking.\
-So,\
-If No dates - 'HH:MM am/pm NA'\
-If date available - 'HH:MM am/pm available DD month_name'\
 
 Examples:
-- 01:15 am NA
-- 12:30 pm available 12 Jun
-- 10:00 am available 15 June Error (means available but got error while booking)
-- 10:18 pm available 2 Aug 100 (means 100 slots were available and was successful in booking visa date)
-- 10:18 pm available 10 Jan 1 Error (means 1 slot was available But was Error while booking)
+01:15 am NA
+12:30 pm available 12 Jun
+10:00 am available 15 June Error (means available but got error while booking)
+10:18 pm available 2 Aug 100 Success (means 100 slots were available and was successful in booking visa date)
+10:18 pm available 10 Jan 1 Error (means 1 slot was available But was Error while booking)
 
 **NOTE: Update only for Visa Interview availability.**
 **NOTE: Please follow the above format or you get kicked without warnings.**
-*Format may be difficult to understand but as the saying goes - All things are difficult before they are easy*
+_Format may be difficult to understand but as the saying goes - All things are difficult before they are easy_
 Happy finding slots!
 
 ## Initial Step
@@ -30,7 +28,7 @@ Go to root folder and run `npm install` to install all the dependencies.
 ## Development server
 
 1. Make sure the branch is master using `git branch`.
-2. Create a copy of *.env.sample* file and rename it to *.env*
+2. Create a copy of _.env.sample_ file and rename it to _.env_
 3. Update the contents of the file using your Bot Token and your telegram UserID (optional)
 4. Go to root folder and run `npm start` to initalize the bot.
 
