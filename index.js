@@ -1,6 +1,12 @@
 require('dotenv').config();
 const { Telegraf } = require('telegraf');
-const { validateMessage, isCurrentCtxValid, getRules } = require('./util');
+const { connectToDb } = require('./db.js');
+const {
+  validateMessage,
+  isCurrentCtxTextMessage,
+  getRules,
+  updateUsersDb
+} = require('./util');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -10,20 +16,23 @@ bot.command('rules', (ctx) => ctx.replyWithHTML(getRules()));
 
 bot.use((ctx) => {
   // If its a valid chat message on the group then proceed or else exit from this middleware.
-  if (!isCurrentCtxValid(ctx)) {
+  if (!isCurrentCtxTextMessage(ctx)) {
+    updateUsersDb(ctx);
     return;
   }
 
-  const { text: message } = ctx.message;
+  const { text } = ctx.message;
 
-  const isValidMessage = validateMessage(message);
+  const isValidMessage = validateMessage(text);
   if (!isValidMessage) {
     const userId = ctx.message.from.id;
     // Dont try to kick if its me
     if (userId === +process.env.MY_TELEGRAM_USER_ID) {
       return;
     }
-    ctx.reply('Message not in correct format. Please follow the rules. Read the pinned message');
+    ctx.reply(
+      'Message not in correct format. Please follow the rules. Read the pinned message'
+    );
     ctx.kickChatMember(userId);
     ctx.unbanChatMember(userId);
     return;
@@ -31,3 +40,12 @@ bot.use((ctx) => {
 });
 
 bot.launch();
+
+//Initalize DB
+(async function () {
+  try {
+    await connectToDb();
+  } catch (error) {
+    console.log('Error connecting to DB - ', error);
+  }
+})();
