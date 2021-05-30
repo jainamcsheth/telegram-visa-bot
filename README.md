@@ -10,14 +10,15 @@ In the above format '?' stands for optional.\
 'Error' in format is to tell that dates were available but error while booking.\
 
 Examples:
-01:15 am NA
-12:30 pm available 12 Jun
-10:00 am available 15 June Error (means available but got error while booking)
-10:18 pm available 2 Aug 100 Success (means 100 slots were available and was successful in booking visa date)
-10:18 pm available 10 Jan 1 Error (means 1 slot was available But was Error while booking)
 
-**NOTE: Update only for Visa Interview availability.**
-**NOTE: Please follow the above format or you get kicked without warnings.**
+- 01:15 am NA
+- 12:30 pm available 12 Jun
+- 10:00 am available 15 June Error (means available but got error while booking)
+- 10:18 pm available 2 Aug 100 Success (means 100 slots were available and was successful in booking visa date)
+- 10:18 pm available 10 Jan 1 Error (means 1 slot was available But was Error while booking)
+
+**NOTE: Update only for Visa Interview availability.**\
+**NOTE: Please follow the above format or you get kicked without warnings.**\
 _Format may be difficult to understand but as the saying goes - All things are difficult before they are easy_
 Happy finding slots!
 
