@@ -65,8 +65,8 @@ const updateUsersDb = async (ctx) => {
   const { new_chat_member, left_chat_member, date } = ctx.message;
 
   if (new_chat_member) {
-    // If new member added is a bot, then kick
-    if (new_chat_member.is_bot) {
+    // If new member added is a bot and IS_BOT_ALLOWED is set to true, then kick
+    if (process.env.IS_BOT_ALLOWED && new_chat_member.is_bot) {
       ctx.kickChatMember(new_chat_member.id);
     } else {
       db.collection('Users').insertOne({
