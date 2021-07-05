@@ -2,7 +2,6 @@ const { getDb } = require('./db');
 
 /**
  * Returns true if current context is a text message or else false.
- * If a bot is added in the current context, then kick the bot and return false.
  */
 const isCurrentCtxTextMessage = (ctx) => {
   if (!(ctx && ctx.message)) {
@@ -17,8 +16,8 @@ const isCurrentCtxTextMessage = (ctx) => {
  * Format is - 'HH:MM am/pm NA/Available DD? month_name? Total_Slots? Error?'
  * In the above format '?' stands for optional.
  * 'Error' in the format is to tell that dates were available but error while booking.
- * If No dates - 'HH:MM am/pm NA'
- * If date available - 'HH:MM am/pm available DD month_name'
+ * If No Visa date - 'HH:MM am/pm NA'
+ * Is Visa date available - 'HH:MM am/pm available DD? month_name? Total_Slots? Error/Success?'
  * @param {string} message Message to check for validity
  * @returns boolean
  */
@@ -57,31 +56,39 @@ Happy finding slots!
 };
 
 /**
- * Adds/removes the user data from db.
+ * Adds the user data to db.
  * If the new user is a bot, then kick it from chat.
  */
-const updateUsersDb = async (ctx) => {
+const handleMemberJoin = async (ctx) => {
   const db = getDb();
-  const { new_chat_member, left_chat_member, date } = ctx.message;
+  const { date } = ctx.message;
+  const { is_bot, id } = ctx.message.new_chat_member;
 
-  if (new_chat_member) {
-    // If new member added is a bot and IS_BOT_ALLOWED is set to false, then kick
-    if (process.env.IS_BOT_ALLOWED === 'false' && new_chat_member.is_bot) {
-      ctx.kickChatMember(new_chat_member.id);
-    } else {
-      db.collection('Users').insertOne({
-        userId: new_chat_member.id,
-        date: new Date(date).toString()
-      });
-    }
-  } else if (left_chat_member) {
-    db.collection('Users').deleteOne({
-      userId: left_chat_member.id
+  // If new member added is a bot and IS_BOT_ALLOWED is set to false, then kick
+  if (process.env.IS_BOT_ALLOWED === 'false' && is_bot) {
+    ctx.kickChatMember(id);
+  } else {
+    db.collection('Users').insertOne({
+      userId: id,
+      date: new Date(date).toString()
     });
   }
+};
+
+/**
+ * Removes the user data from db.
+ */
+const handleMemberLeave = async (ctx) => {
+  const db = getDb();
+  const { id } = ctx.message.left_chat_member;
+
+  db.collection('Users').deleteOne({
+    userId: id
+  });
 };
 
 exports.validateMessage = validateMessage;
 exports.isCurrentCtxTextMessage = isCurrentCtxTextMessage;
 exports.getRules = getRules;
-exports.updateUsersDb = updateUsersDb;
+exports.handleMemberJoin = handleMemberJoin;
+exports.handleMemberLeave = handleMemberLeave;

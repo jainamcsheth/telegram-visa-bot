@@ -5,7 +5,8 @@ const {
   validateMessage,
   isCurrentCtxTextMessage,
   getRules,
-  updateUsersDb
+  handleMemberJoin,
+  handleMemberLeave
 } = require('./util');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -14,10 +15,14 @@ bot.help((ctx) => ctx.replyWithHTML(getRules()));
 
 bot.command('rules', (ctx) => ctx.replyWithHTML(getRules()));
 
+bot.on('new_chat_members', (ctx) => handleMemberJoin(ctx));
+
+bot.on('left_chat_member', (ctx) => handleMemberLeave(ctx));
+
 bot.use((ctx) => {
+  console.log('here');
   // If its a valid chat message on the group then proceed or else exit from this middleware.
   if (!isCurrentCtxTextMessage(ctx)) {
-    updateUsersDb(ctx);
     return;
   }
 
